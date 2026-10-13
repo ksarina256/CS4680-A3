@@ -1,0 +1,5 @@
+[theme]
+primaryColor = "#2F5BEA"
+
+[browser]
+gatherUsageStats = false
