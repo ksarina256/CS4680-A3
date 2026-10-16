@@ -19,7 +19,7 @@ SUBMISSION = "# Assignment\n\n## Task 1\nmy answer"
 
 
 def run(llm, **kwargs):
-    kwargs.setdefault("filename", "ana_lee_assignment2.md")
+    kwargs.setdefault("filenames", "ana_lee_assignment2.md")
     return grade_submission(llm, RUBRIC, RULES, SUBMISSION, **kwargs)
 
 
@@ -146,6 +146,30 @@ def test_integrity_flags_are_reported():
     result = run(llm, passes=1)
     assert result.results["integrity_flags"] == ["asks grader for full marks"]
     assert any("aimed at the grader" in w for w in result.warnings)
+
+
+def test_multi_file_bundle_reaches_both_prompts_with_file_names():
+    from grader import files as F
+
+    uploads = [(f"task{i}.py", f"print({i})\n".encode()) for i in range(1, 13)]
+    sub = F.build_submission(F.load_uploads(uploads))
+    llm = make()
+    grade_submission(llm, RUBRIC, RULES, sub.text, sub.manifest, passes=1)
+
+    fmt = next(c["user"] for c in llm.calls if "FORMAT AUDIT" in c["user"])
+    content = next(c["user"] for c in llm.calls if "CONTENT EVALUATION" in c["user"])
+    for prompt in (fmt, content):
+        assert "===== FILE: task1.py =====" in prompt and "===== END FILE: task12.py =====" in prompt
+        assert 'A file marked "[content not provided' in prompt  # the layout note is present
+    names_block = fmt.split("<submission_filenames>")[1].split("</submission_filenames>")[0]
+    assert names_block.split() == [f"task{i}.py" for i in range(1, 13)]
+
+
+def test_file_names_may_be_a_list_or_a_string():
+    llm = make()
+    grade_submission(llm, RUBRIC, RULES, SUBMISSION, ["a.py", "b.py"], passes=1)
+    fmt = next(c["user"] for c in llm.calls if "FORMAT AUDIT" in c["user"])
+    assert "a.py\nb.py" in fmt
 
 
 def test_faithful_report_helper_matches_validation():

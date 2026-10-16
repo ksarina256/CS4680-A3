@@ -20,7 +20,7 @@ class LLM(Protocol):
 # Default model names can be overridden in the sidebar or with GEMINI_MODEL, OPENAI_MODEL
 # or ANTHROPIC_MODEL. Model names change often; confirm them in your provider's dashboard.
 PROVIDERS: dict[str, dict[str, str]] = {
-    "Gemini": {"env": "GEMINI_API_KEY", "model": "gemini-2.5-flash"},
+    "Gemini": {"env": "GEMINI_API_KEY", "model": "gemini-3.8-flash"},
     "OpenAI": {"env": "OPENAI_API_KEY", "model": "gpt-4.1-mini"},
     "Anthropic": {"env": "ANTHROPIC_API_KEY", "model": "claude-sonnet-5-5"},
 }
@@ -32,8 +32,12 @@ def default_model(provider: str) -> str:
     return os.environ.get(f"{provider.upper()}_MODEL") or PROVIDERS[provider]["model"]
 
 
-def _retry(call: Callable[[], T], attempts: int = 4, delay: float = 5.0) -> T:
-    """Retry rate-limit and overload errors with exponential backoff."""
+def _retry(call: Callable[[], T], attempts: int = 5, delay: float = 8.0) -> T:
+    """Retry rate-limit and overload errors with exponential backoff (8s, 16s, 32s, 64s).
+
+    Large multi-file submissions send a lot of text per call, which makes per-minute
+    quota errors more likely, so the waits are long enough to cross a minute boundary.
+    """
     for attempt in range(attempts):
         try:
             return call()

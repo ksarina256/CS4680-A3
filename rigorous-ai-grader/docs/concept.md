@@ -6,7 +6,7 @@ University teaching assistants and professors spend countless hours grading mult
 
 ## 2. Application design and interaction flow
 
-**Inputs.** The UI has three text areas: the assignment rubric, the formatting and validation rules, and the student's submission text. A fourth, optional field takes the submission's file name, because file-naming rules cannot be checked from pasted text alone.
+**Inputs.** The UI has three input areas: the assignment rubric, the formatting and validation rules, and the student's submission. The submission can be uploaded as any number of files (or one .zip), because real assignments often have many files, or pasted as text. Uploaded files are checked by their own names, and an optional field names pasted text, because file-naming rules cannot be checked from pasted text alone.
 
 **Role of the generative API.** The model acts as an automated teaching assistant. It checks the submission against the formatting rules, grades each task against the rubric with a structured verification protocol, and writes the final report. Totals are computed in code, not by the model.
 
@@ -14,7 +14,7 @@ University teaching assistants and professors spend countless hours grading mult
 
 **Flow.**
 
-1. The user pastes the rubric, rules and submission, and clicks **Grade Submission**.
+1. The user pastes the rubric and rules, uploads the submission's files (or pastes its text), and clicks **Grade Submission**. The app first lists every file it received and whether it could be read.
 2. Prompt 1 audits the formatting rules.
 3. Prompt 2 grades the content, using Prompt 1's output as input, and runs several independent times.
 4. Code merges the passes, scales to 100, applies penalties and floors the result at zero.
@@ -47,4 +47,4 @@ A clean web app built with Python and Streamlit, with text areas for the inputs,
 
 ## 6. Responsible use
 
-AI grades can be wrong. The tool is a first-pass assistant, and an instructor should review each grade before release. Student data should not be pasted into a public deployment without institutional approval.
+AI grades can be wrong. The tool is a first-pass assistant, and an instructor should review each grade before release. Student data should not be uploaded or pasted into a public deployment without institutional approval.

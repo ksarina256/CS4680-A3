@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from typing import Callable, Optional
+from typing import Callable, Optional, Sequence
 
 from . import prompts
 from .llm import LLM
@@ -92,7 +92,7 @@ def grade_submission(
     rubric: str,
     rules: str,
     submission: str,
-    filename: str = "",
+    filenames: str | Sequence[str] = "",
     *,
     passes: int = 3,
     default_penalty: float = 2.0,
@@ -107,13 +107,14 @@ def grade_submission(
     passes = max(1, min(int(passes), 5))
     say = progress or (lambda _msg: None)
     warnings: list[str] = []
+    names = filenames if isinstance(filenames, str) else "\n".join(filenames)
 
     # Prompt 1: format audit
     if rules.strip():
         say("Step 1 of 3: auditing the submission against the formatting rules")
         checks, format_raw = _call_json(
             llm,
-            prompts.format_audit_prompt(rules, submission, filename, default_penalty),
+            prompts.format_audit_prompt(rules, submission, names, default_penalty),
             lambda obj: parse_format_checks(obj, default_penalty),
         )
     else:
