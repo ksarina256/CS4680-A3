@@ -70,14 +70,7 @@ Click **Load sample assignment** to fill all four inputs with a 7-task Python as
 
 ## Deploy (bonus: publishing)
 
-Streamlit Community Cloud is the intended host. Vercel is not a good fit for Streamlit because Streamlit needs a long-running server process.
-
-1. Push this folder to a **public** GitHub repository.
-2. Go to [share.streamlit.io](https://share.streamlit.io), choose **New app**, and select the repository, the `main` branch and `app.py`.
-3. Open **Advanced settings > Secrets** and add `GEMINI_API_KEY = "your-key"`.
-4. Deploy, then copy the public URL into this README and the submission form.
-
-Anyone with the URL can use your server-side key. Use a free-tier key you can afford to lose, set a quota, or leave the secret empty so visitors must paste their own key.
+The application has been deployed on Streamlit Community Cloud as the intended host. Feel free to use any free-tier API key.
 
 ## Tests
 
