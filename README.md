@@ -9,7 +9,7 @@ CS4680 A3: AI Assistant Projet (MVP).
 
 ## The problem
 
-TA's spend hours grading multi-task assignments. Checking every rubric criterion while also enforcing exact formatting rules (Markdown headers, code-fence tags, file names) is slow, tedious and easy to get wrong. This app does both checks the same way every time and shows its evidence. 
+TA's spend hours grading multi-task assignments. For one of my classes this semester, my hw is being graded by AI along with a TA. So this tool can also help students double check and verify their answers before submitting. Checking every rubric criterion while also enforcing exact formatting rules (Markdown headers, code-fence tags, file names) is slow, tedious and easy to get wrong. This app does both checks the same way every time and shows its evidence. 
 
 ## How it works
 
