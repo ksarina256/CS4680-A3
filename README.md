@@ -4,7 +4,7 @@ A strict, rubric-driven grading assistant. Paste an assignment rubric, a set of 
 
 CS4680 A3: AI Assistant Projet (MVP).
 
-- **Live app:** 
+- **Live app: https://rigorous-ai-grader.streamlit.app/** 
 - **Demo video:** 
 
 ## The problem
