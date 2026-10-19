@@ -100,7 +100,6 @@ grader/llm.py           Gemini / OpenAI / Anthropic client behind one interface
 samples/                Demo rubric, rules, file name and submission
 tests/                  51 tests (fake model, no API key needed)
 docs/concept.md         Revised application concept
-docs/video_script.md    Short-form demo video script
 ```
 
 ## Future work
