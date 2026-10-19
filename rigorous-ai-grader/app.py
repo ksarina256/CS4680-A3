@@ -263,5 +263,4 @@ if outcome:
 
 st.caption(
     "AI-generated grades can be wrong. A human should review every grade before it is released. "
-    "Do not upload or paste real student data into a public deployment."
 )
