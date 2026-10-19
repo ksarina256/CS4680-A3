@@ -85,7 +85,6 @@ pytest
 
 - AI grades can be wrong. Treat the output as a first pass and review it before releasing grades to students.
 - Prompt-injection defenses (delimiters, untrusted-data instruction, integrity flags) reduce the risk of a submission steering the grader. They do not remove it.
-- Do not paste real student data into a public deployment unless your institution's policies allow it.
 - Scores are only as good as the rubric. Ambiguous criteria give ambiguous grades.
 
 ## Project layout
